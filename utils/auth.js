@@ -29,3 +29,14 @@ export const loginUser = async (email, password) => {
 	const token = response.data.idToken;
 	return token;
 };
+
+export const newPassword = async (email) => {
+	console.log(email);
+	const response = await axios.post(
+		"https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=" +
+			API_KEY,
+		{ email: email, requestType: "PASSWORD_RESET" }
+	);
+	console.log(response);
+	return response.status;
+};

@@ -46,50 +46,46 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
 	return (
 		<View style={styles.form}>
 			<View>
-				<Input
-					label="Email Address"
-					onUpdateValue={updateInputValueHandler.bind(this, "email")}
-					value={enteredEmail}
-					keyboardType="email-address"
-					isInvalid={emailIsInvalid}
-				/>
-				{!isLogin && (
+				{!isLogin ? (
 					<Input
-						label="Confirm Email Address"
+						label="Email"
 						onUpdateValue={updateInputValueHandler.bind(
 							this,
-							"confirmEmail"
+							"email"
 						)}
-						value={enteredConfirmEmail}
+						value={enteredEmail}
 						keyboardType="email-address"
-						isInvalid={emailsDontMatch}
+						isInvalid={emailIsInvalid}
 					/>
+				) : (
+					<>
+						<Input
+							label="Email"
+							onUpdateValue={updateInputValueHandler.bind(
+								this,
+								"email"
+							)}
+							value={enteredEmail}
+							keyboardType="email-address"
+							isInvalid={emailIsInvalid}
+						/>
+
+						<Input
+							label="Senha"
+							onUpdateValue={updateInputValueHandler.bind(
+								this,
+								"password"
+							)}
+							secure
+							value={enteredPassword}
+							isInvalid={passwordIsInvalid}
+						/>
+					</>
 				)}
-				<Input
-					label="Password"
-					onUpdateValue={updateInputValueHandler.bind(
-						this,
-						"password"
-					)}
-					secure
-					value={enteredPassword}
-					isInvalid={passwordIsInvalid}
-				/>
-				{!isLogin && (
-					<Input
-						label="Confirm Password"
-						onUpdateValue={updateInputValueHandler.bind(
-							this,
-							"confirmPassword"
-						)}
-						secure
-						value={enteredConfirmPassword}
-						isInvalid={passwordsDontMatch}
-					/>
-				)}
+
 				<View style={styles.buttons}>
 					<Button onPress={submitHandler}>
-						{isLogin ? "Log In" : "Sign Up"}
+						{isLogin ? "Entrar" : "Redefinr Senha"}
 					</Button>
 				</View>
 			</View>

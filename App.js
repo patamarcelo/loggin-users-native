@@ -4,6 +4,7 @@ import { StatusBar } from "expo-status-bar";
 
 import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignupScreen";
+import NewPassword from "./screens/NewPassword";
 import WelcomeScreen from "./screens/WelcomeScreen";
 import { Colors } from "./constants/styles";
 import AuthContextprovider, { AuthContext } from "./store/auth-context";
@@ -23,8 +24,25 @@ function AuthStack() {
 				contentStyle: { backgroundColor: Colors.primary100 }
 			}}
 		>
-			<Stack.Screen name="Login" component={LoginScreen} />
-			<Stack.Screen name="Signup" component={SignupScreen} />
+			<Stack.Screen
+				name="Login"
+				component={LoginScreen}
+				options={{
+					headerShown: false,
+					contentStyle: { backgroundColor: Colors.primary500 }
+				}}
+			/>
+			<Stack.Screen
+				name="NewPassword"
+				component={NewPassword}
+				options={{
+					presentation: "modal",
+					title: "Redefinir a Senha",
+					contentStyle: {
+						backgroundColor: Colors.primary[900]
+					}
+				}}
+			/>
 		</Stack.Navigator>
 	);
 }

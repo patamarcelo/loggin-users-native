@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View, Text } from "react-native";
 
 import FlatButton from "../ui/FlatButton";
 import AuthForm from "./AuthForm";
@@ -17,7 +17,7 @@ function AuthContent({ isLogin, onAuthenticate }) {
 
 	function switchAuthModeHandler() {
 		if (isLogin) {
-			navigation.navigate("Signup");
+			navigation.navigate("NewPassword");
 		} else {
 			navigation.navigate("Login");
 		}
@@ -33,38 +33,56 @@ function AuthContent({ isLogin, onAuthenticate }) {
 		const passwordIsValid = password.length > 6;
 		const emailsAreEqual = email === confirmEmail;
 		const passwordsAreEqual = password === confirmPassword;
+		if (isLogin) {
+			if (!emailIsValid || !passwordIsValid) {
+				Alert.alert(
+					"Dados Inválidos",
+					"Por favor conferir os dados inseridos."
+				);
+				setCredentialsInvalid({
+					email: !emailIsValid,
+					confirmEmail: !emailIsValid || !emailsAreEqual,
+					password: !passwordIsValid,
+					confirmPassword: !passwordIsValid || !passwordsAreEqual
+				});
+				return;
+			}
+		}
 
-		if (
-			!emailIsValid ||
-			!passwordIsValid ||
-			(!isLogin && (!emailsAreEqual || !passwordsAreEqual))
-		) {
-			Alert.alert(
-				"Invalid input",
-				"Please check your entered credentials."
-			);
-			setCredentialsInvalid({
-				email: !emailIsValid,
-				confirmEmail: !emailIsValid || !emailsAreEqual,
-				password: !passwordIsValid,
-				confirmPassword: !passwordIsValid || !passwordsAreEqual
-			});
-			return;
+		if (!isLogin) {
+			if (!emailIsValid) {
+				Alert.alert(
+					"E-mail Inválido",
+					"Por favor conferir o e-mail Inserido."
+				);
+				setCredentialsInvalid({
+					email: !emailIsValid,
+					confirmEmail: true,
+					password: true,
+					confirmPassword: true
+				});
+				return;
+			}
 		}
 		onAuthenticate({ email, password });
 	}
 
 	return (
-		<View style={styles.authContent}>
-			<AuthForm
-				isLogin={isLogin}
-				onSubmit={submitHandler}
-				credentialsInvalid={credentialsInvalid}
-			/>
-			<View style={styles.buttons}>
-				<FlatButton onPress={switchAuthModeHandler}>
-					{isLogin ? "Create a new user" : "Log in instead"}
-				</FlatButton>
+		<View style={styles.mainContainer}>
+			<View style={styles.titleContainer}>
+				<Text style={styles.title}>PitayaPay</Text>
+			</View>
+			<View style={styles.authContent}>
+				<AuthForm
+					isLogin={isLogin}
+					onSubmit={submitHandler}
+					credentialsInvalid={credentialsInvalid}
+				/>
+				<View style={styles.buttons}>
+					<FlatButton onPress={switchAuthModeHandler}>
+						{isLogin ? "Esqueci minha senha" : "Tela de Login"}
+					</FlatButton>
+				</View>
 			</View>
 		</View>
 	);
@@ -73,15 +91,34 @@ function AuthContent({ isLogin, onAuthenticate }) {
 export default AuthContent;
 
 const styles = StyleSheet.create({
+	title: {
+		fontSize: 50,
+		color: "whitesmoke",
+		fontStyle: "italic",
+		fontWeight: "bold"
+	},
+	titleContainer: {
+		marginTop: -50,
+		marginBottom: 30
+	},
+	mainContainer: {
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
+		width: "100%"
+	},
 	authContent: {
-		marginTop: 64,
-		marginHorizontal: 32,
+		// marginTop: 64,
+		width: "90%",
+		// flex: 1,
+		// justifyContent: 'center',
+		// alignItems: 'center',
 		padding: 16,
 		borderRadius: 8,
 		backgroundColor: Colors.primary800,
 		elevation: 2,
 		shadowColor: "black",
-		shadowOffset: { width: 1, height: 1 },
+		shadowOffset: { width: 5, height: 10 },
 		shadowOpacity: 0.35,
 		shadowRadius: 4
 	},
