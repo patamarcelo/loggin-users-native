@@ -46,8 +46,8 @@ function AuthenticatedStack(props) {
 					headerRight: ({ tintColor }) => (
 						<IconButton
 							icon="exit"
-							size={24}
 							color={tintColor}
+							size={24}
 							onPress={context.logout}
 						/>
 					)
