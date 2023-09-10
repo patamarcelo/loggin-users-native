@@ -10,10 +10,12 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.19.3",
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/native-stack": "^6.5.0",
     "axios": "^1.5.0",
     "expo": "~49.0.8",
+    "expo-app-loading": "^2.1.1",
     "expo-status-bar": "~1.6.0",
     "react": "18.2.0",
     "react-dom": "17.0.1",
