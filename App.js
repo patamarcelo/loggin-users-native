@@ -1,5 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StatusBar } from "expo-status-bar";
 
 import LoginScreen from "./screens/LoginScreen";
@@ -17,6 +18,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import AppLoading from "expo-app-loading";
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 function AuthStack() {
 	return (
@@ -53,14 +55,14 @@ function AuthStack() {
 function AuthenticatedStack(props) {
 	const { context } = props;
 	return (
-		<Stack.Navigator
+		<Tab.Navigator
 			screenOptions={{
 				headerStyle: { backgroundColor: Colors.primary500 },
 				headerTintColor: "white",
 				contentStyle: { backgroundColor: Colors.primary100 }
 			}}
 		>
-			<Stack.Screen
+			<Tab.Screen
 				name="Welcome"
 				component={WelcomeScreen}
 				options={{
@@ -71,10 +73,13 @@ function AuthenticatedStack(props) {
 							size={24}
 							onPress={context.logout}
 						/>
+					),
+					tabBarIcon: ({ color, size }) => (
+						<Ionicons name="home" color={color} size={size} />
 					)
 				}}
 			/>
-		</Stack.Navigator>
+		</Tab.Navigator>
 	);
 }
 
